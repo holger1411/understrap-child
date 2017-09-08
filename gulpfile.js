@@ -39,6 +39,11 @@ var browserSync = require('browser-sync').create();
 var del = require('del');
 var cleanCSS = require('gulp-clean-css');
 var gulpSequence = require('gulp-sequence')
+var notify = require('gulp-notify');
+var gulpif = require('gulp-if');
+
+// Whether to gulp-notify scss errors
+var notifySassErrors = true;
 
 function swallowError(self, error) {
     console.log(error.toString())
@@ -98,7 +103,9 @@ gulp.task('sass', function () {
                 this.emit('end');
             }
         }))
-        .pipe(sass())
+        .pipe(gulpif(notifySassErrors, sass().on('error', function (error) {
+            return notify().write(error)
+        }), sass()))
         .pipe(gulp.dest('./css'))
         .pipe(rename('custom-editor-style.css'))
     return stream;
