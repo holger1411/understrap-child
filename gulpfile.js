@@ -98,7 +98,9 @@ gulp.task('sass', function () {
                 this.emit('end');
             }
         }))
+        .pipe(sourcemaps.init({loadMaps: true}))
         .pipe(sass())
+        .pipe(sourcemaps.write(undefined, { sourceRoot: null }))
         .pipe(gulp.dest('./css'))
         .pipe(rename('custom-editor-style.css'))
     return stream;
