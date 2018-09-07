@@ -30,6 +30,7 @@ var paths = cfg.paths;
 // Compiles SCSS files in CSS
 gulp.task( 'sass', function() {
     var stream = gulp.src( paths.sass + '/*.scss' )
+        .pipe(sourcemaps.init())
         .pipe( plumber( {
             errorHandler: function( err ) {
                 console.log( err );
@@ -38,6 +39,7 @@ gulp.task( 'sass', function() {
         } ) )
         .pipe( sass( { errLogToConsole: true } ) )
         .pipe( autoprefixer( 'last 2 versions' ) )
+        .pipe(sourcemaps.write())
         .pipe( gulp.dest( paths.css ) )
         .pipe( rename( 'custom-editor-style.css' ) );
     return stream;
@@ -125,11 +127,11 @@ gulp.task( 'browser-sync', function() {
 // Run:
 // gulp watch-bs
 // Starts watcher with browser-sync. Browser-sync reloads page automatically on your browser
-gulp.task( 'watch-bs', ['browser-sync', 'watch', 'scripts'], function() { 
+gulp.task( 'watch-bs', ['browser-sync', 'watch', 'scripts'], function() {
 } );
 
-// Run: 
-// gulp scripts. 
+// Run:
+// gulp scripts.
 // Uglifies and concat all JS files into one
 gulp.task( 'scripts', function() {
     var scripts = [
@@ -203,7 +205,7 @@ gulp.task( 'copy-assets', function() {
 
 // UnderStrap SCSS files
     gulp.src( paths.node + 'understrap/sass/**/*.scss' )
-        .pipe( gulp.dest( paths.dev + '/sass/understrap' ) );    
+        .pipe( gulp.dest( paths.dev + '/sass/understrap' ) );
 
     return stream;
 });
