@@ -53,7 +53,7 @@ gulp.task( 'watch', function() {
     gulp.watch( [paths.dev + '/js/**/*.js', 'js/**/*.js', '!js/child-theme.js', '!js/child-theme.min.js'], ['scripts'] );
 
     //Inside the watch task.
-    gulp.watch( paths.imgsrc + '/**', ['imagemin-watch'] );
+    gulp.watch( paths.imgsrc + '/**', ['imagemin'] );
 });
 
 // Run:
